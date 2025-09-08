@@ -4,9 +4,9 @@ import Layout from './components/Layout'
 import Home from "./pages/Home"
 import Projects from "./pages/Projects"
 import ProjectDetails from "./pages/ProjectDetails"
-import Login from './pages/Login' // Importe o Login
-import Register from './pages/Register' // Importe o Register
-import ProtectedRoute from './components/ProtectedRoute' // Importe a rota protegida
+import Login from './pages/Login' 
+import Register from './pages/Register' 
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
