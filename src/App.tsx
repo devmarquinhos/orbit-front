@@ -7,6 +7,7 @@ import ProjectDetails from "./pages/ProjectDetails"
 import Login from './pages/Login' 
 import Register from './pages/Register' 
 import ProtectedRoute from './components/ProtectedRoute'
+import NoteEditor from './pages/NoteEditor'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path='/projects' element={<Projects/>}/>
             <Route path='/projects/:id' element={<ProjectDetails/>}/>
+            <Route path='/projects/:projectId/notes/:noteId' element={<NoteEditor/>}></Route>
           </Route>
         </Routes>
       </Layout>

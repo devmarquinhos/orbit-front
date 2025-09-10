@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 
 // Interfaces para tipagem dos dados
@@ -20,6 +20,7 @@ export default function ProjectDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjectDetails = async () => {
@@ -41,6 +42,21 @@ export default function ProjectDetails() {
 
     fetchProjectDetails();
   }, [id]);
+
+  const handleCreateNote = async () => {
+    if (!id) return;
+
+    try {
+      const response = await api.post(`/notes/project/${id}`, {
+        content: ''
+      })
+      const newNote = response.data; 
+
+      navigate(`/projects/${id}/notes/${newNote.id}`)
+    } catch {
+      setError("Erro ao criar a nova nota. Tente novamente.")
+    }
+  }
 
   if (loading) {
     return <p className="text-gray-500 text-center">Carregando...</p>;
@@ -65,7 +81,9 @@ export default function ProjectDetails() {
         {project.notes.length === 0 ? (
           <div className="text-center py-10">
             <p className="text-gray-500 mb-4">Nenhuma nota encontrada para este projeto.</p>
-            <button className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors">
+            <button 
+            onClick={handleCreateNote}
+            className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors">
               Criar a primeira nota
             </button>
           </div>
