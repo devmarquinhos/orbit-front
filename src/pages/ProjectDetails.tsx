@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { api } from "../services/api";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { PlusCircle, Trash2, ArrowLeft } from "lucide-react";
 
 interface Note {
   id: number;
@@ -99,6 +99,13 @@ export default function ProjectDetails() {
 
   return (
     <div className="mx-auto w-full max-w-4xl pt-4">
+      <div className="mb-4">
+        <Link to="/projects" className="text-indigo-600 hover:underline flex items-center gap-2 w-fit">
+          <ArrowLeft size={20} />
+          Voltar para todos os projetos
+        </Link>
+      </div>
+
       {/* Cabeçalho do Projeto */}
       <div className="mb-8 text-left">
         <h1 className="text-4xl font-bold text-gray-800">{project.name}</h1>
