@@ -98,20 +98,20 @@ export default function ProjectDetails() {
   }
 
   return (
-    <div className="container mx-auto px-4">
-      {/* Sobre o Projeto */}
-      <div className="mb-8">
+    <div className="mx-auto w-full max-w-4xl pt-4">
+      {/* Cabeçalho do Projeto */}
+      <div className="mb-8 text-left">
         <h1 className="text-4xl font-bold text-gray-800">{project.name}</h1>
         <p className="text-lg text-gray-600 mt-2">{project.description}</p>
       </div>
 
-      {/* Notas */}
+      {/* Lista das notas */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-gray-700">Notas</h2>
           <button
             onClick={handleCreateNote}
-            className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors"
+            className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors flex items-center gap-2"
           >
             <PlusCircle size={20} />
           </button>
@@ -126,7 +126,7 @@ export default function ProjectDetails() {
         ) : (
           <ul className="space-y-3 border-t pt-4">
             {project.notes.map((note) => (
-                       <li
+              <li
                 key={note.id}
                 className="group relative flex items-center justify-between p-4 rounded-md bg-gray-50 hover:bg-gray-100 border border-gray-200"
               >
