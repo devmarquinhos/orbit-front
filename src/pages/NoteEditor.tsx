@@ -5,7 +5,9 @@ import { api } from '../services/api';
 import { useBlockNote } from "@blocknote/react";
 import { type Block } from "@blocknote/core";
 import { BlockNoteView } from '@blocknote/mantine';
-import "@blocknote/core/style.css";
+import "@blocknote/mantine/style.css";
+
+import { ArrowLeft, Save } from 'lucide-react';
 
 interface Note {
   id: number;
@@ -76,7 +78,7 @@ export default function NoteEditor() {
     <div className="container mx-auto pt-4 text-left">
       <div className="flex justify-between items-center mb-4">
         <Link to={`/projects/${projectId}`} className="text-indigo-600 hover:underline">
-          &larr; Voltar para o projeto
+          <ArrowLeft size={32} />
         </Link>
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-500 italic">{saveStatus}</span>
@@ -84,7 +86,7 @@ export default function NoteEditor() {
             onClick={handleSave}
             className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors"
           >
-            Salvar Nota
+            <Save size={24}/>
           </button>
         </div>
       </div>

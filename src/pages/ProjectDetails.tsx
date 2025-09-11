@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { api } from '../services/api';
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { api } from "../services/api";
+import { PlusCircle, Trash2 } from "lucide-react";
+
 interface Note {
   id: number;
   projectNoteId: number;
@@ -47,7 +49,7 @@ export default function ProjectDetails() {
 
     try {
       const response = await api.post(`/notes/project/${id}`, {
-        content: '' 
+        content: "",
       });
       const newNote = response.data;
 
@@ -57,12 +59,42 @@ export default function ProjectDetails() {
     }
   };
 
+  const handleDeleteNote = async (noteIdToDelete: number) => {
+    if (
+      !window.confirm(
+        `Tem certeza que deseja apagar a nota #${noteIdToDelete}?`
+      )
+    ) {
+      return;
+    }
+
+    try {
+      await api.delete(`/notes/${noteIdToDelete}`);
+
+      setProject((currentProject) => {
+        if (!currentProject) return null;
+        return {
+          ...currentProject,
+          notes: currentProject.notes.filter(
+            (note) => note.id !== noteIdToDelete
+          ),
+        };
+      });
+    } catch {
+      setError("Erro ao apagar a nota. Tente novamente.");
+    }
+  };
+
   if (loading) {
     return <p className="text-gray-500 text-center">Carregando...</p>;
   }
 
   if (error || !project) {
-    return <p className="text-red-500 text-center">{error || "Projeto não encontrado."}</p>;
+    return (
+      <p className="text-red-500 text-center">
+        {error || "Projeto não encontrado."}
+      </p>
+    );
   }
 
   return (
@@ -81,24 +113,39 @@ export default function ProjectDetails() {
             onClick={handleCreateNote}
             className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors"
           >
-            + Criar Nova Nota
+            <PlusCircle size={20} />
           </button>
         </div>
-        
+
         {project.notes.length === 0 ? (
           <div className="text-center py-10 border-t">
-            <p className="text-gray-500">Nenhuma nota encontrada para este projeto.</p>
+            <p className="text-gray-500">
+              Nenhuma nota encontrada para este projeto.
+            </p>
           </div>
         ) : (
           <ul className="space-y-3 border-t pt-4">
             {project.notes.map((note) => (
-              <li key={note.id}>
+                       <li
+                key={note.id}
+                className="group relative flex items-center justify-between p-4 rounded-md bg-gray-50 hover:bg-gray-100 border border-gray-200"
+              >
                 <Link
                   to={`/projects/${project.id}/notes/${note.id}`}
-                  className="block p-4 rounded-md bg-gray-50 hover:bg-gray-100 border border-gray-200 transition-colors"
+                  className="font-medium text-gray-800 flex-1 py-1 pr-10"
                 >
-                  <span className="font-medium text-gray-800">Nota #{note.projectNoteId}</span>
+                  Nota #{note.projectNoteId}
                 </Link>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteNote(note.id);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                  aria-label={`Apagar nota ${note.projectNoteId}`}
+                >
+                  <Trash2 size={18} />
+                </button>
               </li>
             ))}
           </ul>
