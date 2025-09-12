@@ -1,10 +1,11 @@
-import { useState, type FormEvent } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, type FormEvent } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import { Mail, Key, LogIn } from "lucide-react";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -14,19 +15,46 @@ export default function Login() {
     setError(null);
     try {
       await login(email, password);
-      navigate('/projects'); // Redireciona para os projetos após o login
+      navigate("/projects"); // Redireciona para os projetos após o login
     } catch {
-      setError('Falha no login. Verifique seu e-mail e senha.');
+      setError("Falha no login. Verifique seu e-mail e senha.");
     }
   };
 
   return (
     <div className="flex justify-center pt-16">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800">Login no Orbit</h1>
+        <h1 className="text-2xl font-bold text-center text-gray-800">
+          Login no Orbit
+        </h1>
+
+        {/* === BOTÃO DE LOGIN COM GOOGLE ADICIONADO AQUI === */}
+        <a
+          href="http://localhost:8080/oauth2/authorization/google"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <img
+            src="/public/icons8-google.svg"
+            alt="Google logo"
+            className="w-5 h-5"
+          />
+          Entrar com Google
+        </a>
+
+        <div className="flex items-center text-center">
+          <hr className="flex-grow border-gray-300" />
+          <span className="px-4 text-sm text-gray-500">OU</span>
+          <hr className="flex-grow border-gray-300" />
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
             <input
               id="email"
               type="email"
@@ -38,7 +66,12 @@ export default function Login() {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Senha</label>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Senha
+            </label>
             <input
               id="password"
               type="password"
@@ -50,13 +83,19 @@ export default function Login() {
             />
           </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
-          <button type="submit" className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button
+            type="submit"
+            className="w-full px-4 py-2 font-semibold text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
             Entrar
           </button>
         </form>
         <p className="text-sm text-center text-gray-600">
-          Não tem uma conta?{' '}
-          <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+          Não tem uma conta?{" "}
+          <Link
+            to="/register"
+            className="font-medium text-indigo-600 hover:text-indigo-500"
+          >
             Registre-se
           </Link>
         </p>
