@@ -111,7 +111,6 @@ export default function ProjectDetails() {
         <p className="text-lg text-gray-400 mt-2">{project.description}</p>
       </div>
 
-      {/* === ESTILO DE VIDRO FOSCO APLICADO AQUI === */}
       <div className="bg-gray-900/40 backdrop-blur-md rounded-lg p-6 border border-white/10 shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold text-white">Notas</h2>

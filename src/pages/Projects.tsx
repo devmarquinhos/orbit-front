@@ -200,7 +200,6 @@ export default function Projects() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {projects.map((project) => (
-          // === ESTILO DE VIDRO FOSCO APLICADO AO CARD AQUI ===
           <div
             key={project.id}
             className="bg-gray-900/40 backdrop-blur-md rounded-lg p-6 text-left flex flex-col border border-white/10 shadow-lg"

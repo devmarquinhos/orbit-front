@@ -10,7 +10,6 @@ export default function Home() {
 
   return (
     <div className="mx-auto w-full max-w-4xl pt-4 text-left">
-      {/* Seção Principal (Hero) com cores para o dark mode */}
       <div className="text-center py-16 px-4">
         <h1 className="text-5xl md:text-6xl font-bold text-white">
           Organize suas ideias em uma órbita.
@@ -26,7 +25,6 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* Seção de Funcionalidades com cores para o dark mode */}
       <div className="py-16 border-t border-white/10">
         <h2 className="text-3xl font-bold text-center text-white mb-12">Funcionalidades Principais</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">

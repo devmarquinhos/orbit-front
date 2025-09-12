@@ -11,13 +11,12 @@ import "@blocknote/mantine/style.css";
 
 import { ArrowLeft, Save } from "lucide-react";
 
-// Corrigindo o tema para usar a propriedade correta
 const darkTransparentTheme: Theme = {
   ...darkDefaultTheme,
   colors: {
     ...darkDefaultTheme.colors,
     editor: {
-      text: "#E5E7EB", // Cor de texto clara para o conteúdo
+      text: "#E5E7EB",
       background: "transparent",
     },
   },
@@ -90,7 +89,6 @@ export default function NoteEditor() {
     fetchNote();
   }, [noteId, editor]);
 
-  // Lógica de salvamento manual
   const handleSave = async () => {
     if (!editor || !noteId) return;
 
@@ -104,8 +102,7 @@ export default function NoteEditor() {
       setSaveStatus("Erro ao salvar ❌");
     }
   };
-
-  // Lógica de auto-save com debounce e auto-scroll
+  
   useEffect(() => {
     if (!editor) {
       return;

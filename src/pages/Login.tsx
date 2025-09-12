@@ -24,7 +24,6 @@ export default function Login() {
 
   return (
     <div className="flex justify-center pt-16">
-      {/* === ESTILO DE VIDRO FOSCO APLICADO AQUI === */}
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-900/40 backdrop-blur-md rounded-lg border border-white/10 shadow-lg">
         <h1 className="text-2xl font-bold text-center text-white">Login no Orbit</h1>
         

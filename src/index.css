@@ -16,17 +16,13 @@
 }
 
 body {
-  /* Cor base do fundo para o tema escuro */
-  background-color: #111827; /* bg-gray-900 */
-  color: #d1d5db; /* text-gray-300 */
+  background-color: #111827;
+  color: #d1d5db;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- EFEITO LAVA LAMP ANIMADO --- */
-
-/* Animação que move e escala os blobs */
 @keyframes move-blob {
   0% {
     transform: scale(1) translate(10px, -30px);
@@ -42,7 +38,6 @@ body {
   }
 }
 
-/* Container que segura os blobs e os posiciona atrás de tudo */
 .background-container {
   position: absolute;
   top: 0;
@@ -53,14 +48,12 @@ body {
   overflow: hidden;
 }
 
-/* Estilo base para cada blob */
 .blob {
   position: absolute;
-  filter: blur(120px); /* O blur que cria o efeito suave */
+  filter: blur(120px);
   transition: all 0.3s ease;
 }
 
-/* Blob 1: Roxo (Sua cor principal) */
 .blob-1 {
   width: 500px;
   height: 500px;
@@ -68,10 +61,9 @@ body {
   background: rgba(95, 75, 182, 0.3);
   top: -50px;
   left: -150px;
-  animation: move-blob 15s infinite alternate; /* Animação mais rápida */
+  animation: move-blob 15s infinite alternate;
 }
 
-/* Blob 2: Azul (Cor de destaque) */
 .blob-2 {
   width: 400px;
   height: 400px;
@@ -79,8 +71,9 @@ body {
   background: rgba(59, 130, 246, 0.2);
   bottom: -100px;
   right: -150px;
-  animation: move-blob 25s infinite alternate-reverse; /* Animação mais lenta e reversa */
+  animation: move-blob 25s infinite alternate-reverse;
 }
+
 .line-clamp-3 {
   overflow: hidden;
   display: -webkit-box;

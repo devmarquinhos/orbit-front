@@ -5,7 +5,7 @@ import {
   useContext,
   type ReactNode,
   useCallback,
-} from "react"; // 1. Importar useCallback
+} from "react";
 import { api } from "../services/api";
 import { jwtDecode } from "jwt-decode";
 
@@ -40,7 +40,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // 2. Envolver as funções com useCallback
   const login = useCallback(async (email: string, password: string) => {
     const response = await api.post("/auth/login", { email, password });
     const { token: newToken } = response.data;
