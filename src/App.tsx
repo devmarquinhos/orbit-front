@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Register from './pages/Register' 
 import ProtectedRoute from './components/ProtectedRoute'
 import NoteEditor from './pages/NoteEditor'
+import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+
+          {/* === NOVA ROTA DE CALLBACK === */}
+          <Route path='/oauth/callback' element={<OAuth2RedirectHandler/>}/>
 
           {/* Rotas Protegidas */}
           <Route element={<ProtectedRoute />}>
