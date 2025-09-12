@@ -33,7 +33,7 @@ export default function Register() {
           className="w-full flex items-center justify-center gap-2 px-4 py-2 font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           <img
-            src="/public/icons8-google.svg"
+            src="icons8-google.svg"
             alt="Google logo"
             className="w-5 h-5"
           />

@@ -28,6 +28,23 @@ interface Note {
   content: string;
 }
 
+const handleUpload = async (file: File) => {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (typeof event.target?.result === "string") {
+        resolve(event.target.result);
+      } else {
+        reject(new Error("Falha ao ler o arquivo."));
+      }
+    };
+    reader.onerror = (error) => {
+      reject(error);
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function NoteEditor() {
   const { projectId, noteId } = useParams<{
     projectId: string;
@@ -36,11 +53,13 @@ export default function NoteEditor() {
   const [note, setNote] = useState<Note | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [saveStatus, setSaveStatus] = useState<string>("Pronto");
+  const [saveStatus, setSaveStatus] = useState<string>("");
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const editor = useBlockNote({});
+  const editor = useBlockNote({
+    uploadFile: handleUpload,
+  });
 
   useEffect(() => {
     if (!noteId || !editor) return;
@@ -92,7 +111,6 @@ export default function NoteEditor() {
     let saveTimeout: number;
 
     const handleContentChange = () => {
-      // Limpa o timer anterior
       clearTimeout(saveTimeout);
 
       const scrollContainer = scrollContainerRef.current;
@@ -109,14 +127,11 @@ export default function NoteEditor() {
               top: scrollContainer.scrollHeight,
               behavior: "smooth",
             });
-          }, 100); // Um pequeno delay pode ajudar a rolagem a ser mais precisa
+          }, 100);
         }
       }
 
-      // Agenda um novo salvamento
       saveTimeout = setTimeout(async () => {
-        // === CORREÇÃO APLICADA AQUI ===
-        // O status "Salvando..." só é definido QUANDO o salvamento vai de fato acontecer
         setSaveStatus("Salvando...");
         if (!noteId) return;
 
@@ -161,7 +176,7 @@ export default function NoteEditor() {
               Voltar para o projeto
             </Link>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500 italic">{saveStatus}</span>
+              <span className="text-sm text-gray-500">{saveStatus}</span>
               <button
                 onClick={handleSave}
                 className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors flex items-center gap-2"
