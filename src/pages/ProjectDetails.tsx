@@ -100,46 +100,44 @@ export default function ProjectDetails() {
   return (
     <div className="mx-auto w-full max-w-4xl pt-4">
       <div className="mb-4">
-        <Link to="/projects" className="text-indigo-600 hover:underline flex items-center gap-2 w-fit">
+        <Link to="/projects" className="text-gray-300 hover:text-white transition-colors flex items-center gap-2 w-fit">
           <ArrowLeft size={20} />
           Voltar para todos os projetos
         </Link>
       </div>
 
-      {/* Cabeçalho do Projeto */}
       <div className="mb-8 text-left">
-        <h1 className="text-4xl font-bold text-gray-800">{project.name}</h1>
-        <p className="text-lg text-gray-600 mt-2">{project.description}</p>
+        <h1 className="text-4xl font-bold text-white">{project.name}</h1>
+        <p className="text-lg text-gray-400 mt-2">{project.description}</p>
       </div>
 
-      {/* Lista das notas */}
-      <div className="bg-white rounded-lg shadow-md p-6">
+      {/* === ESTILO DE VIDRO FOSCO APLICADO AQUI === */}
+      <div className="bg-gray-900/40 backdrop-blur-md rounded-lg p-6 border border-white/10 shadow-lg">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-gray-700">Notas</h2>
+          <h2 className="text-2xl font-semibold text-white">Notas</h2>
           <button
             onClick={handleCreateNote}
-            className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors flex items-center gap-2"
+            className="bg-[#5F4BB6] text-white font-bold py-2 px-4 rounded-md hover:bg-[#4A3B9A] transition-colors flex items-center gap-2"
           >
             <PlusCircle size={20} />
+            Criar Nova Nota
           </button>
         </div>
-
+        
         {project.notes.length === 0 ? (
-          <div className="text-center py-10 border-t">
-            <p className="text-gray-500">
-              Nenhuma nota encontrada para este projeto.
-            </p>
+          <div className="text-center py-10 border-t border-white/10">
+            <p className="text-gray-400">Nenhuma nota encontrada para este projeto.</p>
           </div>
         ) : (
-          <ul className="space-y-3 border-t pt-4">
+          <ul className="space-y-3 border-t border-white/10 pt-4">
             {project.notes.map((note) => (
               <li
                 key={note.id}
-                className="group relative flex items-center justify-between p-4 rounded-md bg-gray-50 hover:bg-gray-100 border border-gray-200"
+                className="group relative flex items-center justify-between p-4 rounded-md bg-white/5 hover:bg-white/10 border border-white/10"
               >
                 <Link
                   to={`/projects/${project.id}/notes/${note.id}`}
-                  className="font-medium text-gray-800 flex-1 py-1 pr-10"
+                  className="font-medium text-gray-200 flex-1 py-1 pr-10"
                 >
                   Nota #{note.projectNoteId}
                 </Link>
@@ -148,7 +146,7 @@ export default function ProjectDetails() {
                     e.stopPropagation();
                     handleDeleteNote(note.id);
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
                   aria-label={`Apagar nota ${note.projectNoteId}`}
                 >
                   <Trash2 size={18} />

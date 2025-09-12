@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { api } from "../services/api";
 
 import { useBlockNote } from "@blocknote/react";
-import { lightDefaultTheme } from "@blocknote/mantine";
+import { darkDefaultTheme } from "@blocknote/mantine";
 import { type Block } from "@blocknote/core";
 import { type Theme } from "@blocknote/mantine";
 import { BlockNoteView } from "@blocknote/mantine";
@@ -11,12 +11,13 @@ import "@blocknote/mantine/style.css";
 
 import { ArrowLeft, Save } from "lucide-react";
 
-const transparentTheme: Theme = {
-  ...lightDefaultTheme,
+// Corrigindo o tema para usar a propriedade correta
+const darkTransparentTheme: Theme = {
+  ...darkDefaultTheme,
   colors: {
-    ...lightDefaultTheme.colors,
+    ...darkDefaultTheme.colors,
     editor: {
-      ...lightDefaultTheme.colors.editor,
+      text: "#E5E7EB", // Cor de texto clara para o conteúdo
       background: "transparent",
     },
   },
@@ -53,7 +54,7 @@ export default function NoteEditor() {
   const [note, setNote] = useState<Note | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [saveStatus, setSaveStatus] = useState<string>("");
+  const [saveStatus, setSaveStatus] = useState<string>("Pronto");
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -89,6 +90,7 @@ export default function NoteEditor() {
     fetchNote();
   }, [noteId, editor]);
 
+  // Lógica de salvamento manual
   const handleSave = async () => {
     if (!editor || !noteId) return;
 
@@ -103,6 +105,7 @@ export default function NoteEditor() {
     }
   };
 
+  // Lógica de auto-save com debounce e auto-scroll
   useEffect(() => {
     if (!editor) {
       return;
@@ -131,19 +134,7 @@ export default function NoteEditor() {
         }
       }
 
-      saveTimeout = setTimeout(async () => {
-        setSaveStatus("Salvando...");
-        if (!noteId) return;
-
-        try {
-          const contentJSON = JSON.stringify(editor.topLevelBlocks);
-          await api.put(`/notes/${noteId}`, { content: contentJSON });
-          setSaveStatus("Salvo ✅");
-        } catch (err) {
-          console.error("Falha ao salvar a nota:", err);
-          setSaveStatus("Erro ao salvar ❌");
-        }
-      }, 1500);
+      saveTimeout = setTimeout(handleSave, 1500);
     };
 
     editor.onEditorContentChange(handleContentChange);
@@ -155,7 +146,7 @@ export default function NoteEditor() {
   }, [editor, noteId]);
 
   if (loading) {
-    return <p className="text-gray-500 text-center">Carregando editor...</p>;
+    return <p className="text-gray-400 text-center">Carregando editor...</p>;
   }
 
   if (error) {
@@ -165,24 +156,23 @@ export default function NoteEditor() {
   return (
     <div className="h-full">
       <div className="mx-auto w-full max-w-4xl flex flex-col h-full">
-        {/* Cabeçalho */}
-        <div className="flex-shrink-0 pt-4 text-gray-800">
+        <div className="flex-shrink-0 pt-4 text-white">
           <div className="flex justify-between items-center mb-4">
             <Link
               to={`/projects/${projectId}`}
-              className="text-indigo-600 hover:underline flex items-center gap-2"
+              className="text-gray-300 hover:text-white transition-colors flex items-center gap-2"
             >
               <ArrowLeft size={20} />
               Voltar para o projeto
             </Link>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">{saveStatus}</span>
+              <span className="text-sm text-gray-400 italic">{saveStatus}</span>
               <button
                 onClick={handleSave}
-                className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700 transition-colors flex items-center gap-2"
+                className="bg-[#5F4BB6] text-white font-bold py-2 px-4 rounded-md hover:bg-[#4A3B9A] transition-colors flex items-center gap-2"
               >
                 <Save size={18} />
-                Salvar Nota
+                Salvar
               </button>
             </div>
           </div>
@@ -190,13 +180,11 @@ export default function NoteEditor() {
             {note ? `Nota #${note.projectNoteId}` : "Carregando..."}
           </h1>
         </div>
-
-        {/* Importando o blocknote */}
         <div
           ref={scrollContainerRef}
           className="flex-grow overflow-y-auto pb-[40vh]"
         >
-          <BlockNoteView editor={editor} theme={transparentTheme} />
+          <BlockNoteView editor={editor} theme={darkTransparentTheme} />
         </div>
       </div>
     </div>
